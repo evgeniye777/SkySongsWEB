@@ -17,35 +17,11 @@
 	<title></title>
 </head>
 <script>
-
 	$(function(){
   $('#tab').on('click', '.rowlink', function(){
-    alert($(this).find('.item').html());
+    alert($(this).find('.itemA').html()+'\n'+$(this).find('.itemS').html());
   });
 });
-
-	function createTable() {
-var myTable = document.getElementById("elem");
-while(myTable.rows.length>0) {
-  myTable.deleteRow(0);}
-var x = parseInt(document.getElementById("x").value);
-var y = parseInt(document.getElementById("y").value);
-var table = document.querySelector('#elem');
-for (var i =0; i< x; i++) {
-var tr = document.createElement('tr');
-for (var j =0; j< y; j++) {
-var td = document.createElement('td');
-var r = getRandomInRange(1,999)
-td.innerHTML = ""+r;
-tr.appendChild(td);
-}
-table.appendChild(tr);
-}
-}
-
-function getRandomInRange(min, max){
-return Math.floor(Math.random()*(max - min +1)) +min;
-}
 </script>
 <style type="text/css">
 table td{
@@ -74,60 +50,55 @@ background-size: cover;
 }
 </style>
 <body>
-<!-- 	<form class="menu">
-<input id="x" type="text" size="10">
-<input id="y" type="text" size="10">
-<input type="button" value=" Table " onclick="createTable();">
-<input type="button" value=" ODD NUM " onclick="ODD();">
-</form>
-<table id="elem"></table> -->
-</body>
-</html>
-
-<?PHP
-echo '<div class="container" style="background-color:yellow;">
+  <form action='' method='post' class="menu">
+<div class="container" style="background-color:skyblue;">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" >
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"  >
               <span class="sr-only">Навигация</span>
               <span class="icon-bar" style="background-color:white;"></span>
               <span class="icon-bar" style="background-color:white;"></span>
               <span class="icon-bar" style="background-color:white;"></span>
             </button>
-        <a class="navbar-brand lead" href="#message" style="color:blue; font-size: 30dp;"role="tab" data-toggle="pill" >Наша команда:</a>
+        <a class="navbar-brand lead" href="#message" style="color:blue; font-size: 50dp;"role="tab" data-toggle="pill" >В Небо Песни:</a>
+        <img src="/iconka8.png" height="50px" width="50px">
       </div>
 
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li ><a href="#home" role="tab" data-toggle="pill">История</a></li>
-          <li><a href="#profile" role="tab" data-toggle="pill">Наш Таксопарк</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Города<b class="caret"></b></a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Контакты</a></li>
+      <div class="collapse navbar-collapse" style="align-content: center;" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav" style="align-content: center;">
+          <li ><input class="submit_form" style="width: 100%; height: 100%;  background-color: #00000000;" type="submit" name="T0" value=" Песнь Возрождения" ></li>
+          <li ><input class="submit_form" style="width: 100%; height: 100%;  background-color: #00000000;" type="submit" name="T1" value=" Хвали Творца"></li>
+          <li ><input class="submit_form" style="width: 100%; height: 100%;  background-color: #00000000;" type="submit" name="T2" value=" Молодёжный сборник"></li>
+          <li ><input class="submit_form" style="width: 100%; height: 100%;  background-color: #00000000;" type="submit" name="T3" value=" Детский сборник"></li>
+          <li ><input class="submit_form" style="width: 100%; height: 100%;  background-color: #00000000;" type="submit" name="T4" value=" Татарский сборник"></li>
         </ul>
       </div>
-</div>';
-$ourData = file_get_contents("t0.json");
+</div>
+<input class="numbers" id="x" name="number3" type="text" size="40" placeholder=" Введите название песни"/>
+<input class="submit_form" style="width: 200px;" type="submit" name="poisk" value=" Найти">
+</form>
+</body>
+</html>
+<?PHP
+if(isset($_POST['T1'])){$ourData = file_get_contents("t1.json");}
+else if(isset($_POST['T2'])){$ourData = file_get_contents("t2.json");}
+else if(isset($_POST['T3'])){$ourData = file_get_contents("t3.json");}
+else if(isset($_POST['T4'])){$ourData = file_get_contents("t4.json");}
+else {$ourData = file_get_contents("t0.json");}
 $decode = json_decode($ourData);
-echo '<div class="container-fluid tab-content">
-<div role="tabpanel" class="tab-pane" id="profile">';
+echo '<div>';
 echo '<br><br><br><table id="tab">';
 foreach($decode as $key => $v ){
-	echo '<tr class="rowlink">';
-	  $_id = $v->_id;
-	  $_akords = $v->akords;
-	  $_name = $v->name;
-	  $_slova = $v->slova;
-	  $_ton = $v->ton;
- // echo '<td><input type="text" value="'.$_id.'" style="color: red;"></td>';
- // echo '<td><input type="text" value="'.$_akords.'" style="color: red;"></td>';
+  echo '<tr class="rowlink">';
+    $_id = $v->_id;
+    $_akords = $v->akords;
+    $_name = $v->name;
+    $_slova = $v->slova;
+    $_ton = $v->ton;
+ echo '<td class="itemA" style="display:none">'.$_akords.'</td>';
  echo '<td class="item"><p>'.$_name.'</p></td>';
- // echo '<td><input type="text" value="'.$_slova.'" style="color: red;"></td>';
- // echo '<td><input type="text" value="'.$_ton.'" style="color: red;"></td>';
+ echo '<td class="itemS" style="display:none">'.$_slova.'</td>';
+ echo '<td class="itemT" style="display:none">'.$_ton.'</td>';
   echo '</tr>';
 }
 echo '<table> </div>';
-echo '<div role="tabpanel" class="tab-pane active" id="home"><i style="font-size: 150%;">Многим любимые романсы — это тоже жанр камерной музыки. Обычно в них исполнялось небольшое</i></div></div>';
 ?>
